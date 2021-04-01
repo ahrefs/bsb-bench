@@ -1,6 +1,11 @@
 
-Credits: Modified from http://blog.camlcity.org/blog/omake1.html
-run `ocaml gen.ml` to generate a performance test for bsb
+Credits: Modified from https://github.com/rescript-lang/bsb-bench
+
+## Get started
+
+Run `ocaml unix.cma gen.ml -n 10 test` to generate a performance test for dune
+
+## Description
 
 The test involves the generation of DR * DC directories, the
 "directory matrix", and each directory contains MR * MC modules,
@@ -20,8 +25,6 @@ is not super-small.
 To test it 
 
 ```sh
-ocaml unix.cma gen.ml -n 2 test
-cd test && npm link bs-platform && time bsb
+ocaml unix.cma gen.ml -n 10 test
+cd test && esy && time esy x dune build @all
 ```
-
-Note to test raw performance, it is recommended to use `bsb.exe`

@@ -59,23 +59,30 @@ let f() =
       close_out f 
     done
   done
-let bsconfig = {|
+let dune = {|
+(include_subdirs unqualified)
+
+(library
+ (name test))
+|}
+let esyjson = {|
 {
-    "name": "test",
-    "sources" : {
-        "dir": "src",
-        "subdirs" : true
-    }
+  "name": "dune-bench",
+  "dependencies": {
+    "ocaml": "4.12.x",
+    "@opam/dune": "*"
+  },"resolutions": {
+    "@opam/dune": "ocaml/dune:dune.opam#e8ad49f2d14d7ba0ec81661ea78b481a23641fd7"
+  }
 }
 |}
-let packagejson = {|{}|}
 let write basedir =
   let () = Unix.mkdir basedir 0o777 in 
-  let f = open_out (Filename.concat basedir "bsconfig.json") in 
-  output_string f bsconfig ; 
+  let f = open_out (Filename.concat basedir "dune") in 
+  output_string f dune ; 
   let () = close_out f in 
-  let f = open_out (Filename.concat basedir "package.json") in 
-  output_string f packagejson ; 
+  let f = open_out (Filename.concat basedir "esy.json") in 
+  output_string f esyjson ; 
   let () = close_out f in 
   
   let basedir = (Filename.concat basedir "src") in
